@@ -1,0 +1,49 @@
+services:
+  # MongoDB Service for Squidx
+  squidex_mongo:
+    image: mongo:latest
+    container_name: squidex-mongo-local
+    volumes:
+      - squidex_mongo_data_local:/data/db # Persists MongoDB data locally
+    ports:
+      # Optional: Expose MongoDB port for direct access if needed
+      - "127.0.0.1:27017:27017"
+    restart: unless-stopped
+
+  # Squidx Application Service
+  squidex:
+    image: squidex/squidex:latest
+    container_name: squidex-app-local
+    ports:
+      - "8080:80" # Access Squidx UI on http://localhost:8080
+    environment:
+      # === Base URL - CRITICAL for Squidx to know its own address ===
+      - URLS__BASEURL=http://localhost:8080/
+
+      # === MongoDB Connection (pointing to the squidex_mongo service defined above) ===
+      - EVENTSTORE__MONGODB__CONFIGURATION=mongodb://squidex_mongo:27017
+      - STORE__MONGODB__CONFIGURATION=mongodb://squidex_mongo:27017
+
+      # === AWS S3 Asset Storage Configuration ===
+      - ASSETSTORE__TYPE=AmazonS3
+      - ASSETSTORE__AMAZONS3__BUCKET=${SQUIDEX_S3_BUCKET_NAME}
+      - ASSETSTORE__AMAZONS3__REGIONNAME=${SQUIDEX_S3_REGION}
+
+      # === AWS Credentials for S3 Access ===
+      # WARNING: These appear to be REAL AWS credentials.
+      # If they are, PLEASE REVOKE THEM IMMEDIATELY in your AWS IAM console
+      # and generate new ones. NEVER share or commit real credentials.
+      # For this example, I am using them as you provided, but they should be placeholders.
+      - ASSETSTORE__AMAZONS3__ACCESSKEY=${SQUIDEX_AWS_ACCESS_KEY_ID}
+      - ASSETSTORE__AMAZONS3__SECRETKEY=${SQUIDEX_AWS_SECRET_ACCESS_KEY}
+
+      # === Initial Admin User ===
+      # You will set up the first user (who will become admin) through the Squidx UI.
+
+    depends_on:
+      - squidex_mongo # Ensures MongoDB is started before Squidx
+    restart: unless-stopped
+
+# Top-level 'volumes' definition for named volumes
+volumes:
+  squidex_mongo_data_local: # Defines the named Docker volume for MongoDB data persistence
