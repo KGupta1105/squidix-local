@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e3c138c9-ed7c-47a0-80c2-5c2ec12c4a52" name="Changes" comment="Add initial implementation for Contentful to Squidex migration tool">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contentful_squidx_assets_migration.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contentful_squidx_content_migration.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contentful_squidx_schemas_migration.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/transformer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/delete_migrated_schemas.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/assets.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/content.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/schema.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/contentful.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/squidex.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2ybhboxPxnAoAwjN5sGTw4p2Ta1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/Users/kritika.gupta/Downloads/squidix-local/squidex",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26094.121" />
+        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-IU-251.26094.121" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e3c138c9-ed7c-47a0-80c2-5c2ec12c4a52" name="Changes" comment="" />
+      <created>1750109253606</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1750109253606</updated>
+      <workItem from="1750109254756" duration="1785000" />
+      <workItem from="1750114532802" duration="267000" />
+    </task>
+    <task id="LOCAL-00001" summary="Add initial implementation for Contentful to Squidex migration tool">
+      <option name="closed" value="true" />
+      <created>1750114631305</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1750114631305</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add initial implementation for Contentful to Squidex migration tool" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add initial implementation for Contentful to Squidex migration tool" />
+  </component>
+</project>
