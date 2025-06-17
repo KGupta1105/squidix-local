@@ -1,21 +1,11 @@
-import requests
-import os
-from dotenv import load_dotenv
+# Legacy compatibility wrapper - imports from the new modular services
+from services.contentful_schemas import ContentfulSchemasService
 
-load_dotenv()
-
-CF_SPACE_ID = os.getenv("CONTENTFUL_SPACE_ID")
-CF_ENVIRONMENT_ID = os.getenv("CONTENTFUL_ENVIRONMENT_ID", "staging-2025-05-27")
-CF_CMA_TOKEN = os.getenv("CONTENTFUL_CMA_TOKEN")
+# Create service instance
+_schemas_service = ContentfulSchemasService()
 
 def get_all_content_types():
-    url = f"https://api.contentful.com/spaces/{CF_SPACE_ID}/environments/{CF_ENVIRONMENT_ID}/content_types"
-    headers = {
-        "Authorization": f"Bearer {CF_CMA_TOKEN}",
-        "Content-Type": "application/vnd.contentful.management.v1+json"
-    }
-
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-
-    return response.json().get("items", [])
+    """
+    Legacy function for backward compatibility
+    """
+    return _schemas_service.get_all_content_types()
