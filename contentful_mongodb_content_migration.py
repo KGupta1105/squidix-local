@@ -57,8 +57,18 @@ def migrate():
                 print("No entries found for content type: {}".format(content_type))
                 continue
             
-            # Create collection name (use content type as collection name)
-            collection_name = content_type
+            # Get content type info to extract the name
+            content_type_info = type_data.get("content_type_info", {})
+            content_type_name = content_type_info.get("name", content_type)  # Fallback to ID if name not found
+            
+            # Use the exact content type name as collection name (MongoDB supports spaces and special characters)
+            collection_name = content_type_name
+            
+            # Ensure name is not empty (fallback to content type ID if needed)
+            if not collection_name:
+                collection_name = content_type
+            
+            print("Using collection name: '{}' (exact content type name)".format(collection_name))
             
             try:
                 # Insert all entries for this content type

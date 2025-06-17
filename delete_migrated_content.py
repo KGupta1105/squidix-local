@@ -33,7 +33,6 @@ def main():
         # Drop each collection completely
         deleted_collections = 0
         for collection_name in collections:
-            print("Dropping collection: {}".format(collection_name))
             
             try:
                 success = mongodb_service.drop_collection(collection_name)
@@ -46,7 +45,6 @@ def main():
                 print("Error dropping collection {}: {}".format(collection_name, str(e)))
         
         print("Content deletion completed!")
-        print("Dropped {}/{} collections".format(deleted_collections, len(collections)))
         
     except Exception as e:
         print("Deletion failed with error: {}".format(str(e)))

@@ -15,7 +15,14 @@ class MongoDBService:
         try:
             # Fix connection string if it has URL encoding issues
             connection_string = self._fix_connection_string(self.connection_string)
-            self.client = MongoClient(connection_string, serverSelectionTimeoutMS=5000)
+            self.client = MongoClient(
+                connection_string, 
+                serverSelectionTimeoutMS=30000, 
+                connectTimeoutMS=30000,
+                socketTimeoutMS=30000,
+                retryWrites=True,
+                w='majority'
+            )
             self.db = self.client[self.database_name]
             print("Initialized MongoDB client for database: {}".format(self.database_name))
         except Exception as e:
@@ -100,7 +107,7 @@ class MongoDBService:
         """
         try:
             collection = self.get_collection(collection_name)
-            if not collection:
+            if collection is None:
                 return None
             
             result = collection.insert_one(document)
@@ -217,7 +224,6 @@ class MongoDBService:
                 return False
             
             self.db.drop_collection(collection_name)
-            print("Dropped collection: {}".format(collection_name))
             return True
         except Exception as e:
             print("Error dropping collection {}: {}".format(collection_name, str(e)))
@@ -243,7 +249,7 @@ class MongoDBService:
         """
         try:
             collection = self.get_collection(collection_name)
-            if not collection:
+            if collection is None:
                 return False
             
             result = collection.create_index(index_spec)
