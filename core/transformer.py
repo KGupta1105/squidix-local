@@ -21,7 +21,13 @@ def camel_case(name: str) -> str:
     parts = re.sub(r'[^a-zA-Z0-9]+', ' ', name).split()
     return parts[0].lower() + ''.join(word.capitalize() for word in parts[1:]) if parts else name.lower()
 
-def convert_field_type(contentful_type):
+def convert_field_type(contentful_type, validations=None):
+    # Check if this is a dropdown field (Symbol/Text with 'in' validation)
+    if validations:
+        for validation in validations:
+            if "in" in validation and contentful_type in ["Symbol", "Text"]:
+                return "String"  # Will be configured as dropdown below
+    
     mapping = {
         "Symbol": "String",
         "Text": "RichText",
@@ -36,6 +42,14 @@ def convert_field_type(contentful_type):
         "Array": "Array"
     }
     return mapping.get(contentful_type, "String")
+
+def is_dropdown_field(field):
+    """Check if a Contentful field should be converted to a Squidex dropdown"""
+    validations = field.get("validations", [])
+    for validation in validations:
+        if "in" in validation and field.get("type") in ["Symbol", "Text"]:
+            return True, validation["in"]
+    return False, []
 
 def transform_content_type(contentful_model, schema_id_map, resolve_references=True):
     original_name = contentful_model["name"]
@@ -55,12 +69,29 @@ def transform_content_type(contentful_model, schema_id_map, resolve_references=T
             continue
 
         field_name = camel_case(field["id"])
-        field_type = convert_field_type(field["type"])
-        properties = {
-            "label": field.get("name", field_name),
-            "fieldType": field_type,
-            "isRequired": field.get("required", False)
-        }
+        
+        # Check if this is a dropdown field
+        is_dropdown, dropdown_options = is_dropdown_field(field)
+        
+        if is_dropdown:
+            # Configure as Squidex dropdown
+            field_type = "String"
+            properties = {
+                "label": field.get("name", field_name),
+                "fieldType": field_type,
+                "isRequired": field.get("required", False),
+                "editor": "Dropdown",
+                "allowedValues": dropdown_options,
+                "defaultValue": field.get("defaultValue", {}).get("en-US", dropdown_options[0] if dropdown_options else "")
+            }
+            print(f"🔽 Dropdown field detected: {field_name} with options: {dropdown_options}")
+        else:
+            field_type = convert_field_type(field["type"], field.get("validations", []))
+            properties = {
+                "label": field.get("name", field_name),
+                "fieldType": field_type,
+                "isRequired": field.get("required", False)
+            }
 
         if field["type"] == "Array" and field.get("items", {}).get("type") == "Link":
             schema_ids = []

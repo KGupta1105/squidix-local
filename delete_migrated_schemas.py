@@ -27,8 +27,8 @@ def main():
     headers = get_headers(token)
     schemas = get_schemas(headers)
 
-    migrated_schemas = [s for s in schemas if s.get("type") == "Component"]
-    print(f"Found {len(migrated_schemas)} schemas in 'Component' type.")
+    migrated_schemas = [s for s in schemas if s.get("type") == "Component" or s.get("category") == "Templates"]
+    print(f"Found {len(migrated_schemas)} schemas in 'Component' and 'Template' type.")
 
     for schema in migrated_schemas:
         delete_schema(schema["name"], headers)

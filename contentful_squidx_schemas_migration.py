@@ -10,28 +10,28 @@ from services.contentful import get_all_content_types
 load_dotenv()
 
 @click.command()
-@click.option("--push", is_flag=True, help="Push schemas to Squidex after transformation")
-def migrate(push):
+def migrate():
     content_types = get_all_content_types()
     transformed_schemas = []
 
+    print(f"Found {len(content_types)} content types in Contentful")
+    
     schema_id_map = get_schema_id_map()
 
     for ct in content_types:
+        print(f"Processing content type: {ct.get('name', 'Unknown')}")
         schema = transform_content_type(ct, schema_id_map, resolve_references=False)
         transformed_schemas.append((ct, schema))
-
-        if push:
-            push_schema_to_squidex(schema)
+        push_schema_to_squidex(schema)
 
     schema_id_map = get_schema_id_map()
 
     for ct, _ in transformed_schemas:
+        print(f"Processing references for: {ct.get('name', 'Unknown')}")
         schema = transform_content_type(ct, schema_id_map, resolve_references=True)
-        if push:
-            push_schema_to_squidex(schema)
+        push_schema_to_squidex(schema)
 
-    print("Migration complete.")
+    print("Migration complete - all schemas pushed to Squidex.")
 
 if __name__ == "__main__":
     migrate()
